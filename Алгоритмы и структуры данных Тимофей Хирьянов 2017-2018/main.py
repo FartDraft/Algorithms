@@ -2,8 +2,25 @@ from math import trunc, sqrt
 from random import choice
 
 
-def sieve(n: int) -> list:
-    """Обычное решето Эратосфена. Алгоритм проверки чисел на простоту до заданного 
+def is_simple(num: int) -> bool:  #*
+    """Проверка числа num на простоту.
+
+    Args:
+        num (int): натуральное число.
+
+    Returns:
+        bool: True - если число num простое, иначе False.
+    """
+    if num < 2 or not num % 2 or not num % 3:
+        return False
+    for k in range(6, trunc(sqrt(num)) + 2, 6):
+        if not num % (k - 1) or not num % (k + 1):
+            return False
+    return True
+
+
+def sieve(n: int) -> list:  #*
+    """Решето Эратосфена. Алгоритм проверки чисел на простоту до заданного 
         натурального числа (включительно) путём постепенного отсеивания составных чисел.
 
     Args:
@@ -22,7 +39,7 @@ def sieve(n: int) -> list:
     return ret
 
 
-def insertion_sort(arr: list) -> list:
+def insertion_sort(arr: list) -> list:  #*
     """Сортировка массива по возрастанию методом вставок. O(N**2).
 
     Идея:
@@ -42,7 +59,7 @@ def insertion_sort(arr: list) -> list:
             k -= 1
 
 
-def selection_sort(arr: list) -> list:
+def selection_sort(arr: list) -> list:  #*
     """Сортировка массива по возрастанию методом выбора. O(N**2).
 
     Идея:
@@ -61,7 +78,7 @@ def selection_sort(arr: list) -> list:
         arr[pos], arr[k] = arr[k], arr[pos]
     
 
-def bubble_sort(arr: list) -> list:
+def bubble_sort(arr: list) -> list:  #*
     """Сортировка массива по возрастанию методом пузырька. O(N**2).
 
     Идея:
@@ -85,7 +102,7 @@ def bubble_sort(arr: list) -> list:
             break
 
 
-def gcd(a: int, b: int) -> int:
+def gcd(a: int, b: int) -> int:  #*
     """Алгоритм нахождения наибольшего общего делителя чисел a и b.
 
     Args:
@@ -166,7 +183,7 @@ def quick_sort(arr: list) -> list:
         arr[i] = x
 
 
-def merge_sort(arr: list) -> list:
+def merge_sort(arr: list) -> list:  #*
     """Сортировка слиянием. O(N log N).
     Идея:
         Парадигма "разделяй и властвуй".
@@ -228,7 +245,7 @@ def merge_sort(arr: list) -> list:
     _merge_sort(arr, 0, len(arr) - 1)
 
 
-def bin_search(arr, x):
+def bin_search(arr, x):  #*
     """Алгоритм бинарного поиска элемента x в массиве arr. Массив должен быть отсортирован! O(logN).
 
     Идея:
