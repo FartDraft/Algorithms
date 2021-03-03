@@ -39,7 +39,7 @@ def sieve(n: int) -> list:  #*
     return ret
 
 
-def insertion_sort(arr: list) -> list:  #*
+def insertion_sort(arr: list) -> None:  #*
     """Сортировка массива по возрастанию методом вставок. O(N**2).
 
     Идея:
@@ -59,7 +59,7 @@ def insertion_sort(arr: list) -> list:  #*
             k -= 1
 
 
-def selection_sort(arr: list) -> list:  #*
+def selection_sort(arr: list) -> None:  #*
     """Сортировка массива по возрастанию методом выбора. O(N**2).
 
     Идея:
@@ -78,7 +78,7 @@ def selection_sort(arr: list) -> list:  #*
         arr[pos], arr[k] = arr[k], arr[pos]
     
 
-def bubble_sort(arr: list) -> list:  #*
+def bubble_sort(arr: list) -> None:  #*
     """Сортировка массива по возрастанию методом пузырька. O(N**2).
 
     Идея:
@@ -151,7 +151,7 @@ def hanoi_towers(n: int, start: int, finish: int) -> None:
         hanoi_towers(n - 1, tmp, finish)
 
 
-def quick_sort(arr: list) -> list:
+def quick_sort(arr: list) -> None:
     """Сортировка Тони Хоара. O(NlogN).
     Идея:
         Парадигма "разделяй и властвуй".
@@ -183,7 +183,7 @@ def quick_sort(arr: list) -> list:
         arr[i] = x
 
 
-def merge_sort(arr: list) -> list:  #*
+def merge_sort(arr: list) -> None:  #*
     """Сортировка слиянием. O(N log N).
     Идея:
         Парадигма "разделяй и властвуй".
