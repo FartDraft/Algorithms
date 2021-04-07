@@ -32,11 +32,15 @@ def sieve(n: int) -> list:  #*
     """
     assert n > 2, "n меньше чем 2"
     ret = [False, False] + [True] * (n - 1)
-    for k in range(2, trunc(sqrt(n)) + 1):
-        if ret[k]:
-            for i in range(k * k, n + 1, k):
-                ret[i] = False
-    return ret
+    for k in (2, 3):
+        for i in range(k * k, n + 1, k):
+            ret[i] = False
+    for m in range(6, trunc(sqrt(n)) + 2, 6):
+        for k in (m - 1, m + 1): 
+            if ret[k]:
+                for i in range(k * k, n + 1, k):
+                    ret[i] = False
+    return [i for i, x in enumerate(ret) if x]
 
 
 def insertion_sort(arr: list) -> None:  #*
