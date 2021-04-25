@@ -1,8 +1,13 @@
+__author__ = "Afanasin Egor"
+# При нахождении ошибки в работе функции или неточности в документации обращаться по почте:
+__email__ = "fartdraft@gmail.com"
+
+
 from math import trunc, sqrt
 from random import choice
 
 
-def is_simple(num: int) -> bool:  #*
+def is_simple(num: int) -> bool:
     """Проверка числа num на простоту.
 
     Args:
@@ -19,7 +24,7 @@ def is_simple(num: int) -> bool:  #*
     return True
 
 
-def sieve(n: int) -> list:  #*
+def sieve(n: int) -> list:
     """Решето Эратосфена. Алгоритм проверки чисел на простоту до заданного 
         натурального числа (включительно) путём постепенного отсеивания составных чисел.
 
@@ -43,7 +48,7 @@ def sieve(n: int) -> list:  #*
     return [i for i, x in enumerate(ret) if x]
 
 
-def insertion_sort(arr: list) -> None:  #*
+def insertion_sort(arr: list) -> None:
     """Сортировка массива по возрастанию методом вставок. O(N**2).
 
     Идея:
@@ -53,7 +58,7 @@ def insertion_sort(arr: list) -> None:  #*
         arr (list): исходный массив.
 
     Returns:
-        list: отсортированный по возрастанию массив arr.
+        None.
     """
     for top in range(1, len(arr)):
         k = top
@@ -63,7 +68,7 @@ def insertion_sort(arr: list) -> None:  #*
             k -= 1
 
 
-def selection_sort(arr: list) -> None:  #*
+def selection_sort(arr: list) -> None:
     """Сортировка массива по возрастанию методом выбора. O(N**2).
 
     Идея:
@@ -73,7 +78,7 @@ def selection_sort(arr: list) -> None:  #*
         arr (list): исходный массив.
 
     Returns:
-        list: отсортированный по возрастанию массив arr.
+        None.
     """
     n = len(arr)
     for pos in range(n - 1):
@@ -82,7 +87,7 @@ def selection_sort(arr: list) -> None:  #*
         arr[pos], arr[k] = arr[k], arr[pos]
     
 
-def bubble_sort(arr: list) -> None:  #*
+def bubble_sort(arr: list) -> None:
     """Сортировка массива по возрастанию методом пузырька. O(N**2).
 
     Идея:
@@ -94,7 +99,7 @@ def bubble_sort(arr: list) -> None:  #*
         arr (list): исходный массив.
 
     Returns:
-        list: отсортированный по возрастанию массив arr.
+        None.
     """
     for border in range(len(arr) - 1, 0, -1):  #(1).
         no_swap = True
@@ -106,108 +111,28 @@ def bubble_sort(arr: list) -> None:  #*
             break
 
 
-def gcd(a: int, b: int) -> int:  #*
-    """Алгоритм нахождения наибольшего общего делителя чисел a и b.
-
-    Args:
-        a (int): Первое число.
-        b (int): Второе число.
-
-    Returns:
-        int: НОД чисел a и b.
-    """
-    return a if b == 0 else gcd(b, a % b)
-
-
-def fast_pow(a: float, n: int) -> int:
-    """Алгоритм быстрого возведения числа a в степень n.
-
-    Args:
-        a (float): число.
-        n (int): степень.
-
-    Returns:
-        int: результат.
-    """
-    if n == 0:
-        return 1
-    elif n % 2:
-        return fast_pow(a, n - 1) * a
-    else:
-        return fast_pow(a * a, n // 2)
-
-
-def hanoi_towers(n: int, start: int, finish: int) -> None:
-    """Алгоритм для решения головоломки "Ханойские башни". Суть головоломки:
-    Есть три стержня, пронумерованных числами 1, 2, 3. На стержень start надета пирамидка из n дисков различного диаметра в порядке 
-    возрастания диаметра. Диски можно перекладывать с одного стержня на другой по одному, при этом диск нельзя класть на диск меньшего 
-    диаметра. Необходимо переложить всю пирамидку со стержня start на стержень finish за минимальное число перекладываний.
-
-    Args:
-        n (int): количество дисков.
-        start (int): порядковый номер стартового стержня.
-        finish (int): порядковый номер конечного стержня.
-    """
-    if n > 0:
-        tmp = 6 - start - finish
-        hanoi_towers(n - 1, start, tmp)
-        print(f"Перенесите диск {n} со стержня {start} на стержень {finish}.")
-        hanoi_towers(n - 1, tmp, finish)
-
-
-def quick_sort(arr: list) -> None:
-    """Сортировка Тони Хоара. O(NlogN).
-    Идея:
-        Парадигма "разделяй и властвуй".
-        Разделение:
-            Выбираем из массива элемент, называемый опорным. Разбиваем массив на три подмассива: "элементы меньшие 
-            опорного", "равные" и "большие".
-        Властвование:
-            Рекурсивно сортируем подмассивы "меньших" и "больших" с использованием сортировки Тони Хоара.
-        Комбинирование:
-            Копируем "меньшие", "равные" и "большие" подмассивы в массив arr на нужное место.
-        Рекурсия достигает своего нижнего предела, когда длина сортируемого массива меньше двух. В этом случае вся 
-        работа уже сделана, поскольку такой массив уже является отсортированным
-
-    Args:
-        arr (list): исходный массив.
-
-    Returns:
-        list: отсортированный по возрастанию массив arr.
-    """
-    if len(arr) < 2:
-        return
-    pivot = choice(arr)
-    less = [x for x in arr if x < pivot]
-    equal = [pivot] * arr.count(pivot)
-    greater = [x for x in arr if x > pivot]
-    quick_sort(less)
-    quick_sort(greater)
-    for i, x in enumerate(less + equal + greater):
-        arr[i] = x
-
-
-def merge_sort(arr: list) -> None:  #*
+def merge_sort(arr: list) -> None:
     """Сортировка слиянием. O(N log N).
+
     Идея:
         Парадигма "разделяй и властвуй".
         Разделение:
             Делим массив arr на 2 подмассива длиной len(arr)//2. 
         Властвование:
-            Рекурсивно сортируем эти 2 подмассива с использованием сортировки слияением.
+            Рекурсивно сортируем эти 2 подмассива с использованием сортировки слиянием.
         Комбинирование:
             Соединяем два подмассива для получения окончательного отсортированного ответа.
         Рекурсия достигает своего нижнего предела, когда длина сортируемого массива меньше двух. В этом случае вся 
         работа уже сделана, поскольку такой массив уже является отсортированным.
-
+    
     Args:
         arr (list): исходный массив.
 
     Returns:
-        list: отсортированный по возрастанию массив arr.
+        None.
     """
     def _merge(arr: list, p: int, q: int, r: int) -> None:
-        """Сливает два подмассива arr[p:q+1] и arr[q+1:r] в один отсортированный, элементы которого заменяют текущие
+        """Сливает два подмассива arr[p:q+1] и arr[q+1:r+1] в один отсортированный, элементы которого заменяют текущие
         элементы подмассива arr[p:r+1]. O(N).
 
         Хитрость:
@@ -220,6 +145,9 @@ def merge_sort(arr: list) -> None:  #*
             p (int): индекс начала левой границы.
             q (int): индекс конца левой и начала правой границ.
             r (int): индекс конца правой границы.
+        
+        Returns:
+            None.
         """
         left = [arr[i + p] for i in range(q - p + 1)] + [float("inf")]
         right = [arr[j + q + 1] for j in range(r - q)] + [float("inf")]
@@ -239,6 +167,9 @@ def merge_sort(arr: list) -> None:  #*
             arr (list): массив.
             p (int): индекс начала границы.
             r (int): индекс конца границы.
+
+        Returns:
+            None.
         """
         if p < r:
             q = (p + r) // 2
@@ -249,29 +180,86 @@ def merge_sort(arr: list) -> None:  #*
     _merge_sort(arr, 0, len(arr) - 1)
 
 
-def bin_search(arr, x):  #*
-    """Алгоритм бинарного поиска элемента x в массиве arr. Массив должен быть отсортирован! O(logN).
+def bin_search(seq, x):
+    """Алгоритм бинарного поиска элемента x в последовательности seq. Последовательность должна быть 
+    отсортирована по возрастанию! O(log N).
 
     Идея:
         Находим средний элемент последовательности (m). Если он меньше искомого, то сдвигаем  начало левой границы на 
-        m + 1, иначе сдвигаем конец правой границы на m (учитываем, что arr[m] может быть равна x). Дожидаемся 
+        m + 1, иначе сдвигаем конец правой границы на m (учитываем, что seq[m] может быть равна x). Дожидаемся 
         схождения начала левой и конца правой границ и сравниваем элемент на месте схождения с искомым.
 
     Args:
-        arr (list or tuple): упорядоченная последовательность.
-        x (any): искомый элемент.
+        seq (list или tuple): упорядоченная по возрастанию последовательность.
+        x (любой): искомый элемент.
 
     Returns:
-        int or None: индекс если элемент x есть в массиве arr, иначе None.
+        int или None: индекс элемента x, если этот элемент есть в последовательности seq, иначе None.
     """
-    i, j = 0, len(arr) - 1
+    i, j = 0, len(seq) - 1
     while i < j:
         m = (i + j) // 2
-        if x > arr[m]:
+        if x > seq[m]:
             i = m + 1
         else:
             j = m
-    if arr[j] == x:
+    if seq[j] == x:
         return j
-    else:
-        return None
+    return None
+
+
+def inversions_num(arr: list) -> int:
+    """Алгоритм для нахождения количества инверсий в массиве arr. O(N log N).
+    
+    Идея:
+        Если i < j и arr[i] > arr[j], то пара (i, j) называется инверсией массива arr.
+        Для достижения времени O(N log N) модифицируем сортировку слиянием. В функции 
+        слияния (m_merge) есть такой шаг, когда текущий элемент левой части больше 
+        текущего элемента правой части. Вот в этот момент нужно к (локальному) счётчику
+        инверсий (invcount) добавить количество ещё неиспользованных элементов левой 
+        половины (не учитывая сигнальный элемент). А в рекурсивной функции m_merge_sort 
+        нужно сложить количество инверсий в левой половине, количество в правой, и 
+        количество инверсий, возникающих при слиянии этих половин.
+    
+    Args:
+        arr (list): исходный массив.
+
+    Returns:
+        int: 
+    """
+    def m_merge(arr: list, p: int, q: int, r: int) -> int:
+        left = [arr[i + p] for i in range(q - p + 1)] + [float("inf")]
+        right = [arr[j + q + 1] for j in range(r - q)] + [float("inf")]
+        n = len(left) - 1
+        i = j = invcount = 0
+        for k in range(p, r + 1):
+            if left[i] <= right[j]:
+                arr[k] = left[i]
+                i += 1
+            else:
+                invcount += n - i
+                arr[k] = right[j]
+                j += 1
+        return invcount
+    
+    def m_merge_sort(arr: list, p: int, r: int) -> int:
+        if p < r:
+            q = (p + r) // 2
+            return m_merge_sort(arr, p, q) + m_merge_sort(arr, q + 1, r) + m_merge(arr, p, q, r)
+        return 0
+    
+    arr_copy = arr.copy()
+    return m_merge_sort(arr_copy, 0, len(arr) - 1)
+
+
+def gcd(a: int, b: int) -> int:
+    """Алгоритм нахождения наибольшего общего делителя чисел a и b.
+
+    Args:
+        a (int): Первое число.
+        b (int): Второе число.
+
+    Returns:
+        int: НОД чисел a и b.
+    """
+    return a if b == 0 else gcd(b, a % b)
