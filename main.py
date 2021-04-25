@@ -4,7 +4,6 @@ __email__ = "fartdraft@gmail.com"
 
 
 from math import trunc, sqrt
-from random import choice
 
 
 def is_simple(num: int) -> bool:
@@ -172,9 +171,12 @@ def merge_sort(arr: list) -> None:
             None.
         """
         if p < r:
+            # Разделение.
             q = (p + r) // 2
+            # Властвование.
             _merge_sort(arr, p, q)
             _merge_sort(arr, q + 1, r)
+            # Комбинирование.
             _merge(arr, p, q, r)
     
     _merge_sort(arr, 0, len(arr) - 1)
@@ -250,6 +252,107 @@ def inversions_num(arr: list) -> int:
     
     arr_copy = arr.copy()
     return m_merge_sort(arr_copy, 0, len(arr) - 1)
+
+
+def find_maximum_subarray(arr: list) -> tuple:
+    """Алгоритм для нахождения непустого непрерывного подмассива массива arr, значения которого имеют наибольшую сумму. 
+    Такой подмассив я называю максимальным. O(N log N).
+
+    Идея:
+        Парадигма "разделяй и властвуй".
+        Находим среднюю точку подмассива arr[low:high+1] - mid. Рассматриваем подмассивы arr[low:mid+1] и arr[mid+1:high+1].
+        Заметим, что любой максимальный подмассив arr[i:j+1] массива arr[low:high+1] должен находиться только в одном из 
+        следующих положений:
+            1. Полностью располагаться в подмассиве arr[low:mid+1], так что low <= i <= j <= mid;
+            2. Полностью располагаться в подмассиве arr[mid+1:high+1], так что mid < i <= j <= high;
+            3. Пересекать среднюю точку, так что low <= i <= mid < j <= high.
+        Следовательно, максимальный подмассив подмассива arr[low:high+1] должен иметь наибольшую сумму среди всех
+        подмассивов из каждого положения. Максимальные подмассивы arr[low:mid+1] и arr[mid+1:high+1] находим рекурсивно.
+        Находим максимальный подмассив, пересекающий среднюю точку с помощью функции find_maximum_crossing_subarray за 
+        время O(N). Сравниваем сумму значений элементов 3 максимальных подмассивов из каждого положения, возвращаем 
+        наибольший такой подмассив. Рекурсия достигает базового случая, когда подмассив состоит из одного элемента. 
+        В этом случае максимальным подмассивом этого подмассива является он сам.
+
+    Args:
+        arr (list): исходный массив.
+
+    Returns:
+        tuple: кортеж длиной 3:
+            1 элемент (int): индекс начала максимального подмассива.
+            2 элемент (int): индекс конца максимального подмассива.
+            3 элемент (int): сумма значений элементов максимального подмассива.
+    """
+    def find_maximum_crossing_subarray(arr: list, low: int, mid: int, high: int) -> tuple:
+        """Находит максимальный подмассив подмассива arr[low:high+1], пересекающий среднюю точку (mid) за время O(N).
+        Идея:
+            Заметим, что любой подмассив arr[i:j+1], пересекающий среднюю точку (mid), состоит из двух подмассивов
+            arr[i:mid+1] и arr[mid+1:j+1], где low <= i <= mid < j <= high. Следовательно, нужно просто найти
+            максимальные подмассивы вида arr[i:mid+1] (левая половина) и arr[mid+1:j+1] (правая половина), а затем 
+            объединить их.
+ 
+        Args:
+            arr (list): исходный массив.
+            low (int): индекс начала подмассива.
+            mid (int): индекс средней точки подмассива.
+            high (int): индекс конца подмассива.
+
+        Returns:
+            tuple: кортеж длиной 3:
+                1 элемент (int): индекс начала максимального подмассива, пересекающего среднюю точку.
+                2 элемент (int): индекс конца максимального подмассива, пересекающего среднюю точку.
+                3 элемент (int): сумма значений элементов максимального подмассива, пересекающего среднюю точку.
+        """
+        # Находим максимальный подмассив из левой половины.
+        left_sum = max_left = -1
+        sm = 0
+        for i in range(mid, low - 1, -1):
+            sm += arr[i]
+            if sm > left_sum:
+                left_sum = sm
+                max_left = i
+        # Находим максимальный подмассив из правой половины.
+        right_sum = max_right = -1
+        sm = 0
+        for i in range(mid + 1, high + 1):
+            sm += arr[i]
+            if sm > right_sum:
+                right_sum = sm
+                max_right = i
+        # Объединяем их.
+        return max_left, max_right, left_sum + right_sum
+    
+    def _find_maximum_subarray(arr: list, low: int, high: int) -> tuple:
+        """Находит максимальный подмассив подмассива arr[low:high+1].
+
+        Args:
+            arr (list): исходный массив.
+            low (int): индекс начала подмассива.
+            high (int): индекс конца подмассива.
+
+        Returns:
+            tuple: кортеж длиной 3:
+                1 элемент (int): индекс начала максимального подмассива.
+                2 элемент (int): индекс конца максимального подмассива.
+                3 элемент (int): сумма значений элементов максимального подмассива.
+        """
+        # Базовый случай рекурсии.
+        if low == high:
+            return low, high, arr[low]
+        # Рекурсивный случай.
+        # Разделение.
+        mid = (high + low) // 2
+        # Властвование.
+        left_low, left_high, left_sum = _find_maximum_subarray(arr, low, mid)
+        right_low, right_high, right_sum = _find_maximum_subarray(arr, mid + 1, high)
+        # Комбинирование.
+        cross_low, cross_high, cross_sum = find_maximum_crossing_subarray(arr, low, mid, high)
+        if left_sum >= right_sum and left_sum >= cross_sum:
+            return left_low, left_high, left_sum
+        elif right_sum >= left_sum and right_sum >= cross_sum:
+            return right_low, right_high, right_sum
+        return cross_low, cross_high, cross_sum
+
+    return _find_maximum_subarray(arr, 0, len(arr) - 1)
 
 
 def gcd(a: int, b: int) -> int:
