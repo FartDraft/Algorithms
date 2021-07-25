@@ -1,8 +1,8 @@
 """
-Strassen algorithm for matrix multiplication. Θ(N ** log2(7)), O(N ** 2,81).
+Strassen algorithm for matrix multiplication. Time complexity: Θ(N ** log 7).
 It supports only square matrices of length equal to degree 2.
 """
-from typing import Tuple
+from __future__ import annotations
 
 
 def default_matrix_multiplication(a: list, b: list) -> list:
@@ -19,11 +19,11 @@ def matrix_subtraction(a: list, b: list) -> list:
     return [[a[row][col] - b[row][col] for col in range(len(a[row]))] for row in range(len(a))]
 
 
-def matrix_dimensions(matrix: list) -> Tuple[int, int]:
+def matrix_dimensions(matrix: list) -> tuple[int, int]:
     return len(matrix), len(matrix[0])
 
 
-def matrix_split(matrix: list) -> Tuple[list, list, list, list]:
+def matrix_split(matrix: list) -> tuple[list, list, list, list]:
     """
     Examples:
         >>> matrix_split([[4, 3, 2, 4], [2, 3, 1, 1], [6, 5, 4, 3], [8, 4, 1, 6]])
@@ -79,12 +79,12 @@ def combine_parts(top_left: list, top_right: list, bot_left: list, bot_right: li
     return matrix
 
 
-def strassen(a: list, b: list) -> list:
+def strassen_matrix_multiplication(a: list, b: list) -> list:
     """
     Examples:
-        >>> strassen([[1, 2], [3, 4]], [[5, 6], [7, 8]])
+        >>> strassen_matrix_multiplication([[1, 2], [3, 4]], [[5, 6], [7, 8]])
         [[19, 22], [43, 50]]
-        >>> strassen(
+        >>> strassen_matrix_multiplication(
         ...     [[6, 2, 2, 4], [5, 1, 1, 8], [7, 5, 4, 8], [1, 6, 4, 8]],
         ...     [[8, 1, 8, 6], [5, 6, 7, 1], [2, 5, 6, 1], [4, 8, 2, 6]]
         ... )  # doctest: +NORMALIZE_WHITESPACE
@@ -96,13 +96,13 @@ def strassen(a: list, b: list) -> list:
     atl, atp, abl, abr = matrix_split(a)
     btl, btp, bbl, bbr = matrix_split(b)
 
-    t1 = strassen(atl, matrix_subtraction(btp, bbr))
-    t2 = strassen(matrix_addition(atl, atp), bbr)
-    t3 = strassen(matrix_addition(abl, abr), btl)
-    t4 = strassen(abr, matrix_subtraction(bbl, btl))
-    t5 = strassen(matrix_addition(atl, abr), matrix_addition(btl, bbr))
-    t6 = strassen(matrix_subtraction(atp, abr), matrix_addition(bbl, bbr))
-    t7 = strassen(matrix_subtraction(atl, abl), matrix_addition(btl, btp))
+    t1 = strassen_matrix_multiplication(atl, matrix_subtraction(btp, bbr))
+    t2 = strassen_matrix_multiplication(matrix_addition(atl, atp), bbr)
+    t3 = strassen_matrix_multiplication(matrix_addition(abl, abr), btl)
+    t4 = strassen_matrix_multiplication(abr, matrix_subtraction(bbl, btl))
+    t5 = strassen_matrix_multiplication(matrix_addition(atl, abr), matrix_addition(btl, bbr))
+    t6 = strassen_matrix_multiplication(matrix_subtraction(atp, abr), matrix_addition(bbl, bbr))
+    t7 = strassen_matrix_multiplication(matrix_subtraction(atl, abl), matrix_addition(btl, btp))
 
     return combine_parts(matrix_addition(matrix_subtraction(matrix_addition(t5, t4), t2), t6),
                          matrix_addition(t1, t2), matrix_addition(t3, t4),
