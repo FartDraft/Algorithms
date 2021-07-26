@@ -36,7 +36,6 @@ def merge(left: list, right: list) -> list:
     return list(_merge())
 
 
-
 def merge_sort(arr: list) -> list:
     """
     Examples:
@@ -51,7 +50,6 @@ def merge_sort(arr: list) -> list:
         >>> merge_sort(['4', 'm', 'ye', 'da', '2', '17'])
         ['17', '2', '4', 'da', 'm', 'ye']
     """
-
     if len(arr) <= 1:
         return arr
     mid = len(arr) // 2
