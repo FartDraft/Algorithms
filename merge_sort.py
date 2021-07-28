@@ -49,6 +49,14 @@ def merge_sort(arr: list) -> list:
         ['ad', 'an', 'g', 'mer', 'ze', 'zip']
         >>> merge_sort(['4', 'm', 'ye', 'da', '2', '17'])
         ['17', '2', '4', 'da', 'm', 'ye']
+        >>> import random
+        >>> arr = random.sample(range(-500, 500), 1000)
+        >>> merge_sort(arr) == sorted(arr)
+        True
+        >>> import string
+        >>> arr = random.choices(string.ascii_letters + string.digits, k=1000)
+        >>> merge_sort(arr) == sorted(arr)
+        True
     """
     if len(arr) <= 1:
         return arr
