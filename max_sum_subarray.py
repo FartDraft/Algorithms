@@ -1,5 +1,5 @@
 """
-Algorithm for finding non-empty continuous subarray with maximum sum. Time complexity: Θ(N).
+Algorithm for finding non-empty continuous subarray with maximum sum. Time complexity: Θ(n).
 Idea:
     Максимальный подмассив массива arr[:i+1] представляет собой либо максимальный подмассив массива arr[:i], либо
     подмассив arr[low:i+1], для некоторого 0 <= low <= i. Текущий подмассив arr[low:i+1] рассматривается, пока его 

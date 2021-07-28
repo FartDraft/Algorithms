@@ -1,10 +1,9 @@
 """
-Pure Python implementation of the merge sort algorithm.
 Merge sort is an efficient, general-purpose, and comparison-based sorting algorithm.
 Divine and Conquer paradigm. Time complexity: Θ(n log n).
 Idea:
     Разделение:
-        Делим массив arr на 2 подмассива длиной len(arr) / 2.
+        Делим массив arr на 2 подмассива длиной n / 2.
     Властвование:
         Рекурсивно сортируем эти 2 подмассива с использованием сортировки слиянием.
     Комбинирование:
