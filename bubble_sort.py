@@ -12,7 +12,7 @@ Idea:
 """
 
 
-def bubble_sort(arr):
+def bubble_sort(arr: list) -> list:
     """
     Examples:
         >>> bubble_sort([])
@@ -34,6 +34,7 @@ def bubble_sort(arr):
         >>> bubble_sort(arr) == sorted(arr)
         True
     """
+    arr = arr.copy()
     length = len(arr)
     for i in range(length - 1):
         no_swap = True
