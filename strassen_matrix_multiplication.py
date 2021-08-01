@@ -1,5 +1,5 @@
 """
-Strassen algorithm for matrix multiplication. Time complexity: Θ(N ** log 7).
+Strassen algorithm for matrix multiplication. Time complexity: Θ(n ** log 7).
 It supports only square matrices of length equal to degree 2.
 """
 from __future__ import annotations
