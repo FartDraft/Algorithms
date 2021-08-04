@@ -44,15 +44,15 @@ def max_sum_crossing_subarray(arr: list, low: int, mid: int, high: int) -> tuple
     return max_left, max_right, left_sum + right_sum
 
 
-def _recursive_max_sum_subarray(arr: list, low: int, high: int) -> tuple[int, int, int]:
+def _max_sum_subarray_recursive(arr: list, low: int, high: int) -> tuple[int, int, int]:
     # Базовый случай.
     if low == high:
         return low, high, arr[low]
     # Рекурсивный случай. Разделение.
     mid = (high + low) // 2
     # Властвование.
-    left_low, left_high, left_sum = _recursive_max_sum_subarray(arr, low, mid)
-    right_low, right_high, right_sum = _recursive_max_sum_subarray(arr, mid + 1, high)
+    left_low, left_high, left_sum = _max_sum_subarray_recursive(arr, low, mid)
+    right_low, right_high, right_sum = _max_sum_subarray_recursive(arr, mid + 1, high)
     # Комбинирование.
     cross_low, cross_high, cross_sum = max_sum_crossing_subarray(arr, low, mid, high)
     if left_sum >= right_sum and left_sum >= cross_sum:
@@ -62,19 +62,19 @@ def _recursive_max_sum_subarray(arr: list, low: int, high: int) -> tuple[int, in
     return right_low, right_high, right_sum
 
 
-def recursive_max_sum_subarray(arr: list) -> tuple[int, int, int]:
+def max_sum_subarray_recursive(arr: list) -> tuple[int, int, int]:
     """
     Examples:
-        >>> recursive_max_sum_subarray([-1, -2, -3, -4, 0])
+        >>> max_sum_subarray_recursive([-1, -2, -3, -4, 0])
         (4, 4, 0)
-        >>> recursive_max_sum_subarray([-4, -2, -1, -3])
+        >>> max_sum_subarray_recursive([-4, -2, -1, -3])
         (2, 2, -1)
-        >>> recursive_max_sum_subarray([-2, -5, 6, -2, -3, 1, 5, -6])
+        >>> max_sum_subarray_recursive([-2, -5, 6, -2, -3, 1, 5, -6])
         (2, 6, 7)
-        >>> recursive_max_sum_subarray([13, -3, -25, 20, -3, -16, -23, 18, 20, -7, 12, -5, -22, 15, -4, 7])
+        >>> max_sum_subarray_recursive([13, -3, -25, 20, -3, -16, -23, 18, 20, -7, 12, -5, -22, 15, -4, 7])
         (7, 10, 43)
     """
-    return _recursive_max_sum_subarray(arr, 0, len(arr) - 1)
+    return _max_sum_subarray_recursive(arr, 0, len(arr) - 1)
 
 
 if __name__ == "__main__":
