@@ -2,28 +2,31 @@
 Strassen algorithm for matrix multiplication. Time complexity: Θ(n ** log 7).
 It supports only square matrices of length equal to degree 2.
 """
-from __future__ import annotations
+from typing import List, Tuple
 
 
-def default_matrix_multiplication(a: list, b: list) -> list:
+Matrix = List[List[int]]
+
+
+def default_matrix_multiplication(a: Matrix, b: Matrix) -> Matrix:
     """Multiply only for 2x2 matrices."""
     return [[a[0][0] * b[0][0] + a[0][1] * b[1][0], a[0][0] * b[0][1] + a[0][1] * b[1][1]],
             [a[1][0] * b[0][0] + a[1][1] * b[1][0], a[1][0] * b[0][1] + a[1][1] * b[1][1]]]
 
 
-def matrix_addition(a: list, b: list) -> list:
+def matrix_addition(a: Matrix, b: Matrix) -> Matrix:
     return [[a[row][col] + b[row][col] for col in range(len(a[row]))] for row in range(len(a))]
 
 
-def matrix_subtraction(a: list, b: list) -> list:
+def matrix_subtraction(a: Matrix, b: Matrix) -> Matrix:
     return [[a[row][col] - b[row][col] for col in range(len(a[row]))] for row in range(len(a))]
 
 
-def matrix_dimensions(matrix: list) -> tuple[int, int]:
+def matrix_dimensions(matrix: Matrix) -> Tuple[int, int]:
     return len(matrix), len(matrix[0])
 
 
-def matrix_split(matrix: list) -> tuple[list, list, list, list]:
+def matrix_split(matrix: Matrix) -> Tuple[Matrix, Matrix, Matrix, Matrix]:
     """
     Examples:
         >>> matrix_split([[4, 3, 2, 4], [2, 3, 1, 1], [6, 5, 4, 3], [8, 4, 1, 6]])
@@ -50,7 +53,7 @@ def matrix_split(matrix: list) -> tuple[list, list, list, list]:
     )
 
 
-def combine_parts(top_left: list, top_right: list, bot_left: list, bot_right: list) -> list:
+def combine_parts(top_left: Matrix, top_right: Matrix, bot_left: Matrix, bot_right: Matrix) -> Matrix:
     """
     Examples:
         >>> combine_parts([[4, 3], [2, 3]], [[2, 4], [1, 1]], [[6, 5], [8, 4]], [[4, 3], [1, 6]])
@@ -79,7 +82,7 @@ def combine_parts(top_left: list, top_right: list, bot_left: list, bot_right: li
     return matrix
 
 
-def strassen_matrix_multiplication(a: list, b: list) -> list:
+def strassen_matrix_multiplication(a: Matrix, b: Matrix) -> Matrix:
     """
     Examples:
         >>> strassen_matrix_multiplication([[1, 2], [3, 4]], [[5, 6], [7, 8]])
